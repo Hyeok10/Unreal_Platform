@@ -22,7 +22,6 @@ void ARotatingPlatform::BeginPlay()
 
     InitialScale = GetActorScale3D();
 
-    // 5초 후 한 번 색상 변경 타이머 설정
     GetWorldTimerManager().SetTimer(
         ColorChangeTimerHandle,
         this,
@@ -31,7 +30,6 @@ void ARotatingPlatform::BeginPlay()
         false
     );
 
-    // 3초 간격으로 반복 색상 변경 타이머 설정
     GetWorldTimerManager().SetTimer(
         RepeatingColorChangeTimerHandle,
         this,
@@ -45,10 +43,8 @@ void ARotatingPlatform::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 
-    // 여러축으로 회전 가능
     AddActorLocalRotation(RotationSpeed * DeltaTime);
 
-    // Sin 함수를 이용한 스케일 변화
     if (bUseSinScale)
     {
         const float Time = GetWorld()->GetTimeSeconds();
@@ -65,7 +61,6 @@ void ARotatingPlatform::ChangeColor()
         UMaterialInstanceDynamic* DynMaterial = PlatformMesh->CreateAndSetMaterialInstanceDynamic(0);
         if (DynMaterial)
         {
-            // 무작위 색상 적용
             const FLinearColor RandomColor = FLinearColor::MakeRandomColor();
             DynMaterial->SetVectorParameterValue(TEXT("Color"), RandomColor);
         }
