@@ -45,7 +45,7 @@ void ARotatingPlatform::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 
-    // 다축 회전 가능
+    // 여러축으로 회전 가능
     AddActorLocalRotation(RotationSpeed * DeltaTime);
 
     // Sin 함수를 이용한 스케일 변화
