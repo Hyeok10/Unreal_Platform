@@ -27,11 +27,11 @@ protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Scale|SinWave")
     bool bUseSinScale;
 
-    // Sin 주기 (초당 파동 수)
+    // Sin 주기
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Scale|SinWave")
     float ScaleFrequency;
 
-    // 스케일 변동 폭 (진폭)
+    // 스케일 변동 폭
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Scale|SinWave")
     float ScaleAmplitude;
 
