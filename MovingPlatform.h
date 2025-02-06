@@ -2,12 +2,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "MovingPlatform.generated.h" // 반드시 필요
+#include "MovingPlatform.generated.h"
 
 UCLASS()
 class SP_HW_6TH_API AMovingPlatform : public AActor
 {
-    GENERATED_BODY() // 반드시 필요
+    GENERATED_BODY() 
 
 public:
     AMovingPlatform();
