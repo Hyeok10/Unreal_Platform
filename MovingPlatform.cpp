@@ -15,7 +15,7 @@ AMovingPlatform::AMovingPlatform()
 
 void AMovingPlatform::BeginPlay()
 {
-    Super::BeginPlay(); // Super를 올바르게 사용하도록 보장
+    Super::BeginPlay(); 
 
     StartLocation = GetActorLocation();
 }
