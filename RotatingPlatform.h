@@ -10,20 +10,39 @@ class SP_TASK_6TH_API ARotatingPlatform : public AActor
     GENERATED_BODY()
 
 public:
-    // ±âº» »ı¼ºÀÚ
     ARotatingPlatform();
 
 protected:
     virtual void BeginPlay() override;
-
-public:
     virtual void Tick(float DeltaTime) override;
 
-    // ¹ßÆÇÀÇ ¸Ş½¬ ÄÄÆ÷³ÍÆ® (¿¡µğÅÍ¿¡¼­ È®ÀÎ °¡´É)
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
     UStaticMeshComponent* PlatformMesh;
 
-    // È¸Àü ¼Óµµ (ÃÊ´ç È¸Àü °¢µµ, ¿¡µğÅÍ¿¡¼­ Á¶Àı °¡´É)
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Platform Settings")
-    float RotationSpeed;
+    // íšŒì „ ì†ë„ (X, Y, Zì¶• ê°œë³„ íšŒì „ ê°€ëŠ¥)
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Rotation")
+    FRotator RotationSpeed;
+
+    // Sin í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•´ ìŠ¤ì¼€ì¼ ë³€í™”ë¥¼ ì ìš©í• ì§€ ì—¬ë¶€
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Scale|SinWave")
+    bool bUseSinScale;
+
+    // Sin ì£¼ê¸° (ì´ˆë‹¹ íŒŒë™ ìˆ˜)
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Scale|SinWave")
+    float ScaleFrequency;
+
+    // ìŠ¤ì¼€ì¼ ë³€ë™ í­ (ì§„í­)
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Scale|SinWave")
+    float ScaleAmplitude;
+
+    // ê²Œì„ ì‹œì‘ ì‹œ ì €ì¥ë˜ëŠ” ê¸°ë³¸ ìŠ¤ì¼€ì¼
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Scale|SinWave")
+    FVector InitialScale;
+
+private:
+    UFUNCTION()
+    void ChangeColor();
+
+    FTimerHandle ColorChangeTimerHandle;
+    FTimerHandle RepeatingColorChangeTimerHandle;
 };
