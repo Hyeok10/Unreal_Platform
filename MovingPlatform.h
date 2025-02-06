@@ -36,5 +36,4 @@ public:
 
 private:
     FVector StartLocation; // 시작 위치 저장
-    bool bMovingForward;   // 현재 이동 방향 (true = 전진, false = 후진)
 };
