@@ -5,7 +5,7 @@
 #include "RotatingPlatform.generated.h"
 
 UCLASS()
-class SP_TASK_6TH_API ARotatingPlatform : public AActor
+class SP_HW_6th_API ARotatingPlatform : public AActor
 {
     GENERATED_BODY()
 
