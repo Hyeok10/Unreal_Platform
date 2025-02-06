@@ -1,52 +1,48 @@
 #include "MovingPlatform.h"
 #include "Components/StaticMeshComponent.h"
+#include "Math/UnrealMathUtility.h"
 
 AMovingPlatform::AMovingPlatform()
 {
     PrimaryActorTick.bCanEverTick = true;
 
-    // Static Mesh Component »ı¼º ¹× ·çÆ® ÄÄÆ÷³ÍÆ®·Î ¼³Á¤
+    // Static Mesh Component ìƒì„± ë° ë£¨íŠ¸ ì»´í¬ë„ŒíŠ¸ë¡œ ì„¤ì •
     PlatformMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PlatformMesh"));
     RootComponent = PlatformMesh;
 
-    // ±âº» ÀÌµ¿ ¼Óµµ ¹× ÀÌµ¿ ¹üÀ§
-    MoveSpeed = 200.f; // ÃÊ´ç 200 À¯´Ö ÀÌµ¿
-    MaxRange = 500.f;  // ½ÃÀÛ À§Ä¡¿¡¼­ 500 À¯´Ö ÀÌµ¿ °¡´É
-    MoveDirection = FVector(1.f, 0.f, 0.f); // ±âº» XÃà ÀÌµ¿
-
-    bMovingForward = true;
+    // ê¸°ë³¸ ì´ë™ ì†ë„ ë° ì´ë™ ë²”ìœ„
+    MoveSpeed = 200.f; // ì´ˆë‹¹ 200 ìœ ë‹› ì´ë™
+    MaxRange = 500.f;  // ì‹œì‘ ìœ„ì¹˜ì—ì„œ 500 ìœ ë‹› ì´ë™ ê°€ëŠ¥
+    MoveDirection = FVector(1.f, 0.f, 0.f); // ê¸°ë³¸ Xì¶• ì´ë™
 }
 
 void AMovingPlatform::BeginPlay()
 {
     Super::BeginPlay();
-    StartLocation = GetActorLocation(); // ÃÖÃÊ À§Ä¡ ÀúÀå
+    StartLocation = GetActorLocation(); // ìµœì´ˆ ìœ„ì¹˜ ì €ì¥
 }
 
 void AMovingPlatform::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 
-    // ÇöÀç À§Ä¡¸¦ °¡Á®¿È
     FVector CurrentLocation = GetActorLocation();
-
-    // ÀÌµ¿ °Å¸® °è»ê
     float MoveAmount = MoveSpeed * DeltaTime;
-    FVector Offset = (bMovingForward ? MoveDirection : -MoveDirection) * MoveAmount;
-
-    // »õ À§Ä¡ °è»ê
+    FVector Offset = MoveDirection * MoveAmount;
     FVector NewLocation = CurrentLocation + Offset;
 
-    // ½ÃÀÛ À§Ä¡¿¡¼­ ÇöÀç±îÁö ÀÌµ¿ÇÑ °Å¸® °è»ê
+    // ì‹œì‘ ìœ„ì¹˜ì—ì„œì˜ ì´ë™ ê±°ë¦¬ ê³„ì‚°
     float DistanceFromStart = FVector::Dist(StartLocation, NewLocation);
-
-    // ÀÌµ¿ ¹æÇâÀ» ¹İÀüÇØ¾ß ÇÏ´ÂÁö È®ÀÎ
-    if (DistanceFromStart >= MaxRange)
+    
+    if (DistanceFromStart > MaxRange)
     {
-        bMovingForward = !bMovingForward; // ÀÌµ¿ ¹æÇâ ¹İÀü
-        NewLocation = CurrentLocation; // ÇöÀç À§Ä¡ À¯ÁöÇÏ¿© ¼ø°£ ÀÌµ¿ ¹æÁö
+        // ì´ˆê³¼ëœ ê±°ë¦¬ ë³´ì •
+        float Overshoot = DistanceFromStart - MaxRange;
+        NewLocation -= MoveDirection * Overshoot;
+
+        // ì´ë™ ë°©í–¥ ë°˜ì „
+        MoveDirection *= -1;
     }
 
-    // »õ À§Ä¡ Àû¿ë
     SetActorLocation(NewLocation);
 }
